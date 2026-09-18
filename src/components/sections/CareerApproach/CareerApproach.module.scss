@@ -1,0 +1,184 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.approach {
+  background: linear-gradient(to bottom, $color-bg-primary, $color-bg-secondary);
+  padding-block: $spacing-4xl;
+  overflow: hidden;
+
+  &__inner {
+    @include container;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-3xl;
+  }
+
+  &__title {
+    font-size: clamp($font-size-2xl, 4vw, $font-size-4xl);
+    font-weight: $font-weight-bold;
+    color: #fff;
+    margin-bottom: $spacing-md;
+    line-height: 1.4;
+  }
+
+  &__lead {
+    color: $color-text-secondary;
+    font-size: $font-size-base;
+  }
+
+  &__brMobile {
+    @include responsive(md) {
+      display: none;
+    }
+  }
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    align-items: center;
+
+    @include responsive(lg) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: $spacing-md;
+    }
+  }
+
+  &__card {
+    flex: 1;
+    @include glass-card;
+    padding: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    width: 100%;
+    max-width: 540px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform $transition-base, border-color $transition-base;
+
+    &:hover {
+      border-color: rgba($color-accent, 0.3);
+      transform: translateY(-4px);
+    }
+  }
+
+  &__cardHeader {
+    text-align: center;
+    @include responsive(md) {
+      text-align: left;
+    }
+  }
+
+  &__stepNav {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-black;
+    color: $color-accent-light;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  &__cardTitle {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: #fff;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__item {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: flex-start;
+  }
+
+  &__iconBox {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba($color-accent, 0.1);
+    color: $color-accent-light;
+    @include flex-center;
+    flex-shrink: 0;
+  }
+
+  &__itemLabel {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: 2px;
+  }
+
+  &__itemDesc {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: 1.5;
+  }
+
+  &__connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    flex-shrink: 0;
+  }
+
+  &__arrow {
+    color: rgba($color-accent, 0.4);
+    transform: rotate(90deg);
+
+    @include responsive(lg) {
+      transform: rotate(0);
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  &__results {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__result {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: flex-start;
+  }
+
+  &__resultLabel {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: 2px;
+  }
+
+  &__resultDesc {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: 1.5;
+  }
+
+  &__resultIcon {
+    width: 20px;
+    height: 20px;
+    color: $color-accent-light;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  &__cardFooter {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    text-align: center;
+    margin-top: auto;
+  }
+}

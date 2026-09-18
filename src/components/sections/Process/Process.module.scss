@@ -1,0 +1,171 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.process {
+  @include section-padding;
+  background: $color-bg-primary;
+  position: relative;
+  overflow: hidden;
+
+  &__bgAccent {
+    position: absolute;
+    top: 50%;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__inner {
+    @include container;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+
+    @include responsive(lg) {
+      margin-bottom: $spacing-3xl;
+    }
+  }
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.2em;
+    color: $color-accent;
+    text-transform: uppercase;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__heading {
+    font-size: clamp($font-size-3xl, 4vw, $font-size-5xl);
+    font-weight: $font-weight-black;
+    color: $color-text-primary;
+    line-height: $line-height-tight;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__headingAccent {
+    @include gradient-text;
+  }
+
+  &__desc {
+    font-size: $font-size-base;
+    color: $color-text-secondary;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: $line-height-relaxed;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__main {
+    width: 100%;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__step {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  &__stepSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  &__stepIconBox {
+    width: 40px;
+    height: 40px;
+    background: rgba($color-accent, 0.1);
+    border: 1px solid rgba($color-accent, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-accent-light;
+    z-index: 1;
+    transition: background-color $transition-fast, transform $transition-fast;
+
+    .process__step:hover & {
+      background: rgba($color-accent, 0.25);
+      transform: scale(1.1);
+    }
+  }
+
+  &__stepConnector {
+    flex: 1;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba($color-accent, 0.4), transparent);
+    margin-block: 4px;
+  }
+
+  &__stepInfo {
+    padding-bottom: $spacing-lg;
+    flex: 1;
+  }
+
+  &__stepNumText {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-black;
+    color: $color-accent-light;
+    letter-spacing: 0.1em;
+    display: block;
+  }
+
+  &__stepTitle {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: 8px;
+  }
+
+  &__stepDesc {
+    font-size: $font-size-base;
+    color: $color-text-secondary;
+    line-height: $line-height-relaxed;
+  }
+
+  &__cta {
+    margin-top: $spacing-md;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__ctaBtn {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px $spacing-xl;
+    background: $color-accent;
+    color: #fff;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    border-radius: $border-radius-full;
+    transition: background-color $transition-base, transform $transition-base, box-shadow $transition-base;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+
+    &:hover {
+      background: $color-accent-light;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+    }
+  }
+}

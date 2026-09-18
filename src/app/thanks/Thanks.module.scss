@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
+
+// =============================================================================
+// Tokens & Design System
+// =============================================================================
+$c-brand: #0F172A;              // Slate Navy
+$c-brand-blue: #1D4ED8;         // Deep Royal Blue
+$c-brand-blue-soft: #EFF6FF;    // Soft Blue Tint
+$c-brand-blue-border: #DBEAFE;  // Soft Blue Border
+$c-bg-white: #FFFFFF;
+$c-bg-slate: #F8FAFC;           // Clean Slate
+$c-bg-subtle: #F1F5F9;
+
+$c-text-main: #0F172A;          // Slate 900
+$c-text-sub: #334155;           // Slate 700
+$c-text-muted: #64748B;         // Slate 500
+
+$c-border: #E2E8F0;
+$c-action: #1D4ED8;
+$c-action-hover: #1E40AF;
+
+$font-num: "Plus Jakarta Sans", system-ui, sans-serif;
+$font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+// =============================================================================
+// Thanks Page Main Section
+// =============================================================================
+.thanksPage {
+  background: $c-bg-slate;
+  color: $c-text-sub;
+  font-family: $font-jp;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  // Soft subtle blue ambient glow at top
+  &::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 680px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(29, 78, 216, 0.08) 0%, rgba(29, 78, 216, 0.02) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Main Container
+  &__main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 16px 72px;
+    position: relative;
+    z-index: 1;
+
+    @media (min-width: 768px) {
+      padding: 72px 24px 88px;
+    }
+  }
+
+  // Thanks Card
+  &__card {
+    background: $c-bg-white;
+    border: 1px solid $c-border;
+    border-radius: 20px;
+    box-shadow: 0 12px 36px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 24px 36px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: 600px) {
+      padding: 48px 40px 44px;
+    }
+  }
+
+  // Check Icon Box
+  &__iconWrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: $c-brand-blue-soft;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  &__icon {
+    color: $c-brand-blue;
+  }
+
+  // Title
+  &__title {
+    font-size: clamp(22px, 4.5vw, 28px);
+    font-weight: 900;
+    color: $c-text-main;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+
+  // Description
+  &__desc {
+    font-size: 14.5px;
+    color: $c-text-sub;
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 28px;
+
+    p {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .highlight {
+      font-weight: 700;
+      color: $c-text-main;
+    }
+  }
+
+  // Next Steps Guide (3-Step Box)
+  &__steps {
+    width: 100%;
+    background: $c-bg-slate;
+    border: 1px solid $c-border;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 32px;
+
+    @media (min-width: 600px) {
+      padding: 22px 24px;
+    }
+  }
+
+  &__stepsTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 800;
+    color: $c-text-main;
+    letter-spacing: 0.02em;
+    margin-bottom: 14px;
+  }
+
+  &__stepsList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__stepItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  &__stepNum {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: $c-brand-blue;
+    color: #FFFFFF;
+    font-family: $font-num;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  &__stepContent {
+    flex: 1;
+  }
+
+  &__stepHeading {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: $c-text-main;
+    line-height: 1.4;
+    margin-bottom: 2px;
+  }
+
+  &__stepDetail {
+    font-size: 12px;
+    color: $c-text-muted;
+    line-height: 1.6;
+  }
+
+  // Button
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $c-action;
+    color: #FFFFFF;
+    font-family: $font-jp;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(29, 78, 216, 0.25);
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+
+    &:hover {
+      background: $c-action-hover;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(29, 78, 216, 0.35);
+    }
+  }
+}
+
+// Pop in animation for Check mark
+@keyframes popIn {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

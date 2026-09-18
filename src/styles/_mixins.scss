@@ -1,0 +1,88 @@
+@use 'variables' as *;
+
+// ============================================================
+// メディアクエリ
+// ============================================================
+@mixin responsive($bp) {
+  @if $bp == sm {
+    @media (min-width: #{$bp-sm}) { @content; }
+  } @else if $bp == md {
+    @media (min-width: #{$bp-md}) { @content; }
+  } @else if $bp == lg {
+    @media (min-width: #{$bp-lg}) { @content; }
+  } @else if $bp == xl {
+    @media (min-width: #{$bp-xl}) { @content; }
+  } @else if $bp == 2xl {
+    @media (min-width: #{$bp-2xl}) { @content; }
+  }
+}
+
+// ============================================================
+// コンテナ
+// ============================================================
+@mixin container {
+  width: 100%;
+  max-width: $max-width-content;
+  margin-inline: auto;
+  padding-inline: $spacing-sm;
+
+  @include responsive(md) {
+    padding-inline: $spacing-lg;
+  }
+}
+
+// ============================================================
+// セクション共通パディング
+// ============================================================
+@mixin section-padding {
+  padding-block: $spacing-3xl;
+
+  @include responsive(lg) {
+    padding-block: $spacing-4xl;
+  }
+}
+
+// ============================================================
+// グラスモーフィズムカード
+// ============================================================
+@mixin glass-card {
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-lg;
+  backdrop-filter: blur(12px);
+}
+
+// ============================================================
+// ブルーグロー効果
+// ============================================================
+@mixin glow($color: $color-accent-glow, $blur: 40px) {
+  box-shadow: 0 0 $blur $color;
+}
+
+// ============================================================
+// テキストグラデーション (accent)
+// ============================================================
+@mixin gradient-text {
+  background: linear-gradient(135deg, $color-accent-light 0%, $color-accent 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ============================================================
+// フレックスセンター
+// ============================================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ============================================================
+// フォーカスリング
+// ============================================================
+@mixin focus-ring {
+  outline: 2px solid $color-accent;
+  outline-offset: 3px;
+  border-radius: $border-radius-sm;
+}

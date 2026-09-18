@@ -1,0 +1,145 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.value {
+  @include section-padding;
+  background: $color-bg-secondary;
+  position: relative;
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xl;
+  }
+
+  &__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    align-items: center;
+    margin-bottom: $spacing-md;
+  }
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.2em;
+    color: $color-accent;
+    text-transform: uppercase;
+  }
+
+  &__heading {
+    font-size: clamp($font-size-3xl, 4vw, $font-size-5xl);
+    font-weight: $font-weight-black;
+    color: $color-text-primary;
+    line-height: $line-height-tight;
+    letter-spacing: -0.02em;
+  }
+
+  &__headingAccent {
+    @include gradient-text;
+    display: inline-block;
+  }
+
+  &__desc {
+    font-size: $font-size-base;
+    color: $color-text-secondary;
+    max-width: $max-width-text;
+    line-height: $line-height-relaxed;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+
+    @include responsive(md) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-lg;
+    }
+
+    @include responsive(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__card {
+    @include glass-card;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform $transition-base, border-color $transition-base, box-shadow $transition-base;
+
+    &:hover {
+      transform: translateY(-8px);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+
+      .value__cardImage {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  &__cardImageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  &__cardImage {
+    transition: transform $transition-slow;
+    object-fit: cover;
+  }
+
+  &__cardIconOverlay {
+    position: absolute;
+    bottom: $spacing-sm;
+    right: $spacing-sm;
+    width: 40px;
+    height: 40px;
+    background: rgba($color-bg-card, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid $color-border;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-accent-light;
+    z-index: 1;
+  }
+
+  &__cardBody {
+    padding: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    flex: 1;
+  }
+
+  &__cardTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    line-height: $line-height-snug;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__cardNote {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+    color: $color-text-muted;
+    opacity: 0.8;
+  }
+
+  &__cardDesc {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: $line-height-relaxed;
+  }
+}

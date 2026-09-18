@@ -1,0 +1,77 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.footer {
+  background: $color-bg-secondary;
+  border-top: 1px solid $color-border-subtle;
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: $spacing-lg;
+    padding-block: $spacing-2xl;
+
+    @include responsive(md) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__logo {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.02em;
+    color: $color-text-primary;
+  }
+
+  &__tagline {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__nav {
+  }
+
+  &__navList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $spacing-sm $spacing-lg;
+
+    @include responsive(md) {
+      justify-content: flex-start;
+    }
+
+    a {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $color-accent-light;
+      }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid $color-border-subtle;
+    padding-block: $spacing-sm;
+    text-align: center;
+  }
+
+  &__copy {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+}
