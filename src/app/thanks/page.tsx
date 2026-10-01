@@ -36,12 +36,6 @@ export default function ThanksPage() {
             </Link>
             <Link href="/#faq" className="header-nav-link">FAQ</Link>
           </nav>
-
-          <Link href="/#form" className="header-cta-btn">
-            <span className="header-cta-btn-text-full">無料相談を予約する</span>
-            <span className="header-cta-btn-text-short">無料相談</span>
-            <ArrowRight size={12} strokeWidth={2.4} />
-          </Link>
         </div>
       </header>
 

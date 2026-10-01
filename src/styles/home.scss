@@ -91,6 +91,13 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
   }
 }
 
+.br-sp {
+  display: inline;
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
 .wrap {
   width: 100%;
   max-width: 1060px;
@@ -411,16 +418,40 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
   }
 
   &-title {
-    font-size: clamp(32px, 5vw, 44px);
+    font-size: clamp(23px, 7.2vw, 42px);
     font-weight: 900;
     line-height: 1.35;
     letter-spacing: -0.02em;
     font-feature-settings: "palt" 1;
     color: $c-text-main;
     margin-bottom: 20px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 
     .text-accent {
       color: $c-brand-blue;
+    }
+  }
+
+  .hero-category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: $c-brand-blue-soft;
+    color: $c-brand-blue;
+    border: 1px solid $c-brand-blue-border;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    @media (min-width: 600px) {
+      font-size: 12.5px;
+      padding: 5px 14px;
     }
   }
 
@@ -428,34 +459,148 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
     font-size: clamp(14px, 3.6vw, 16px);
     line-height: 1.85;
     color: $c-text-sub;
+    margin-bottom: 22px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-bottom: 24px;
+    width: 100%;
+
+    @media (min-width: 600px) {
+      align-items: flex-start;
+      width: auto;
+    }
+  }
+
+  .hero-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $c-brand-blue;
+    color: #FFFFFF;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: clamp(14px, 4vw, 15.5px);
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 10px 24px -4px rgba(29, 78, 216, 0.4);
+    transition: all 0.25s ease;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+
+    @media (min-width: 520px) {
+      width: auto;
+      padding: 15px 26px;
+      font-size: 15.5px;
+      gap: 10px;
+    }
+
+    &:hover {
+      background: $c-action-hover;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -4px rgba(29, 78, 216, 0.5);
+      color: #FFFFFF;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 
   &-trust-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
 
     @media (min-width: 520px) {
-      display: flex;
-      flex-wrap: wrap;
       gap: 6px 8px;
     }
 
     .trust-pill {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       background: $c-bg-slate;
       border: 1px solid $c-border;
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 999px;
       font-weight: 600;
       color: $c-text-sub;
-      white-space: nowrap;
-      font-size: 11.5px;
+      font-size: 11px;
+      line-height: 1.4;
       text-align: center;
+      white-space: nowrap;
+
+      @media (min-width: 480px) {
+        font-size: 11.5px;
+        padding: 6px 10px;
+      }
     }
+  }
+}
+
+// Target Audience Callout
+.target-callout-box {
+  background: #FFFFFF;
+  border: 1px solid $c-border;
+  border-radius: 14px;
+  padding: clamp(20px, 3.5vw, 28px);
+  margin-bottom: 40px;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+
+  .target-callout-title {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: $c-brand-blue;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .target-callout-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .target-callout-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: $c-text-main;
+    line-height: 1.5;
+    background: $c-bg-slate;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  .target-callout-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: $c-brand-blue-soft;
+    color: $c-brand-blue;
+    font-size: 12px;
+    font-weight: 900;
+    flex-shrink: 0;
+    margin-top: 1px;
   }
 }
 
@@ -1159,6 +1304,73 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
       padding: 1px 6px;
       border-radius: 4px;
       line-height: 1.4;
+    }
+
+    .badge-optional {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #64748B;
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      padding: 1px 6px;
+      border-radius: 4px;
+      line-height: 1.4;
+    }
+
+    .form-sub-note {
+      font-size: 12px;
+      color: #64748B;
+      line-height: 1.5;
+      margin-top: -2px;
+      margin-bottom: 4px;
+    }
+
+    .topic-options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+
+      @media (min-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .topic-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: $c-text-main;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+
+      input[type="checkbox"] {
+        width: 17px;
+        height: 17px;
+        accent-color: $c-brand-blue;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      &:hover {
+        background: #FFFFFF;
+        border-color: #94A3B8;
+      }
+
+      &.is-checked {
+        background: $c-brand-blue-soft;
+        border-color: $c-brand-blue;
+        color: $c-brand-blue;
+        font-weight: 700;
+      }
     }
 
     input,

@@ -32,6 +32,14 @@ const experienceOptions = [
   '10年以上',
 ];
 
+const consultationTopicOptions = [
+  '自分の適正年収・市場価値を知りたい',
+  '転職すべきか現職に残るべきか悩んでいる',
+  '福岡のIT業界・開発組織の内情を聞きたい',
+  '自社開発やモダン開発企業の求人を見てみたい',
+  'U・Iターンの進め方・生活環境を知りたい',
+];
+
 export default function LpPage() {
   const router = useRouter();
 
@@ -44,8 +52,15 @@ export default function LpPage() {
     experience: '',
     message: '',
   });
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [formErrors, setFormErrors] = useState<Partial<FormData>>({});
+
+  const handleTopicToggle = (topic: string) => {
+    setSelectedTopics((prev) =>
+      prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
+    );
+  };
 
   const validateForm = (): boolean => {
     const errs: Partial<FormData> = {};
@@ -54,7 +69,7 @@ export default function LpPage() {
     if (!formData.phone.trim()) errs.phone = '電話番号を入力してください';
     if (!formData.jobType) errs.jobType = '現在の職種を選択してください';
     if (!formData.experience) errs.experience = '経験年数を選択してください';
-    if (!formData.message.trim()) errs.message = 'ご相談内容を入力してください';
+    // ご相談内容は任意入力（選択チェックボックスと併用可能）
     setFormErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -79,11 +94,21 @@ export default function LpPage() {
       const endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
       if (!endpoint) throw new Error('APIエンドポイントが設定されていません');
 
+      const messageParts: string[] = [];
+      if (selectedTopics.length > 0) {
+        messageParts.push(`【ご相談・関心のあるテーマ】\n${selectedTopics.map((t) => `・${t}`).join('\n')}`);
+      }
+      if (formData.message.trim()) {
+        messageParts.push(`【詳細・現状のお悩み】\n${formData.message.trim()}`);
+      }
+      const combinedMessage = messageParts.join('\n\n') || '相談希望（詳細は面談時にお伺い）';
+
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
+          message: combinedMessage,
           sendType: 'lp',
         }),
       });
@@ -92,6 +117,7 @@ export default function LpPage() {
 
       tracking.trackLead();
       setFormData({ name: '', email: '', phone: '', jobType: '', experience: '', message: '' });
+      setSelectedTopics([]);
       router.push('/thanks');
     } catch (err) {
       console.error('Submit error:', err);
@@ -147,12 +173,6 @@ export default function LpPage() {
             </a>
             <a href="#faq" className="header-nav-link">FAQ</a>
           </nav>
-
-          <a href="#form" className="header-cta-btn">
-            <span className="header-cta-btn-text-full">無料相談を予約する</span>
-            <span className="header-cta-btn-text-short">無料相談</span>
-            <ArrowRight size={12} strokeWidth={2.4} />
-          </a>
         </div>
       </header>
 
@@ -160,24 +180,34 @@ export default function LpPage() {
       <section className="hero" id="hero">
         <div className="wrap hero-grid">
           <div>
+            <div className="hero-category-tag">
+              <span>福岡特化 × ITエンジニア専門</span>
+            </div>
+
             <h1 className="hero-title">
-              <span className="keep">どこで働くかの前に、</span>
+              <span className="keep">求人票を眺める前に、</span>
               <br />
               <span className="keep text-accent">どう生きたいか</span>
-              <span className="keep">から始めよう。</span>
+              <span className="keep">から始める</span>
+              <br className="br-sp" />
+              <span className="keep">IT転職相談</span>
             </h1>
 
             <p className="hero-lead">
-              とりあえず求人票を眺める前に、あなたのキャリアの本音を聞かせてください。
-              転職先とのミスマッチをなくし、「自分はこれでいいんだ」と納得して次の道を選べるよう、福岡のITエンジニアのキャリアを徹底的に整理します。
+              転職を前提としなくても大丈夫。あなたの技術の強みと本音を徹底的に整理し、「自分はこれでいいんだ」と納得して次の道を選べる軸をつくります。福岡のリアルな開発現場を知る国家資格コンサルタントが1対1で個別伴走。
             </p>
 
-
+            <div className="hero-actions">
+              <a href="#form" className="hero-cta-btn">
+                <span>無料でキャリアの本音を相談する</span>
+                <ArrowRight size={18} strokeWidth={2.4} />
+              </a>
+            </div>
 
             <div className="hero-trust-list">
               <span className="trust-pill">初回90分 無料</span>
-              <span className="trust-pill">転職前提なし</span>
-              <span className="trust-pill">求人押し付けゼロ</span>
+              <span className="trust-pill">転職前提なし・現職残留OK</span>
+              <span className="trust-pill">無理な求人押し付けゼロ</span>
               <span className="trust-pill">オンライン対応・履歴書不要</span>
             </div>
           </div>
@@ -306,6 +336,31 @@ export default function LpPage() {
       {/* EMPATHY SECTION */}
       <section className="sec sec--slate" id="empathy">
         <div className="wrap wrap-narrow">
+          {/* Target Audience Callout */}
+          <div className="target-callout-box reveal-item">
+            <div className="target-callout-title">
+              <span>こんなお悩み・状況のITエンジニアの方に最適です</span>
+            </div>
+            <div className="target-callout-grid">
+              <div className="target-callout-item">
+                <span className="target-callout-check">✓</span>
+                <span>転職すべきか、今の会社でスキルを磨くべきか迷っている</span>
+              </div>
+              <div className="target-callout-item">
+                <span className="target-callout-check">✓</span>
+                <span>自分の技術力や年収が、福岡の市場で適正なのか客観的に知りたい</span>
+              </div>
+              <div className="target-callout-item">
+                <span className="target-callout-check">✓</span>
+                <span>他県から福岡へのU・Iターンを考えているが、現地の内情が見えない</span>
+              </div>
+              <div className="target-callout-item">
+                <span className="target-callout-check">✓</span>
+                <span>求人票を押し付けてこない、技術現場に詳しい専門家に相談したい</span>
+              </div>
+            </div>
+          </div>
+
           <div className="sec-head reveal-item">
             <span className="sec-tag">
               エンジニアが抱える本音
@@ -411,9 +466,9 @@ export default function LpPage() {
                     <span className="feature-topic">本音の棚卸しと軸の言語化</span>
                   </div>
                   <h3>
-                    <span className="keep">「求人紹介」から入らない。</span>
+                    <span className="keep">「いきなり求人紹介」はしません。</span>
                     <br />
-                    <span className="keep">まずあなたの本音を</span>
+                    <span className="keep">まずあなたの強みと本音を</span>
                     <span className="keep">徹底的に整理します</span>
                   </h3>
                   <p>
@@ -438,18 +493,20 @@ export default function LpPage() {
                 <div className="feature-desc-box">
                   <div className="feature-badge">
                     <span className="feature-num">02</span>
-                    <span className="feature-topic">福岡現地のリアルな市場感</span>
+                    <span className="feature-topic">福岡現地のリアルな市場感と厳選紹介</span>
                   </div>
                   <h3>
-                    <span className="keep">福岡のIT市場・開発現場の</span>
-                    <span className="keep">リアルを知り尽くしている</span>
+                    <span className="keep">福岡のIT・Web開発現場を知り尽くし、</span>
+                    <br className="br-pc" />
+                    <span className="keep">厳選した優良企業だけをご紹介</span>
                   </h3>
                   <p>
-                    福岡の主要IT企業の社風、開発環境、技術スタック、給与レンジを長年にわたり定点観測。モダンスタックに本気で取り組める環境や、エンジニアを本当に大切にする組織の実情を踏まえて、表面的な求人票では見えない「生きた情報」を包み隠さずお伝えします。
+                    単なるキャリア整理で終わるのではなく、転職を希望される方には、福岡の主要IT企業の社風、開発環境、技術スタック、給与レンジを熟知した上で、あなたの軸に本当にマッチする企業のみを厳選紹介。求人票には載っていない「開発現場のリアル」を包み隠さずお伝えします。
                   </p>
                   <ul className="feature-list">
                     <li className="feature-list-item">バックエンド・Web・アプリ・AI特化の市場感</li>
                     <li className="feature-list-item">地域密着だから把握できる組織カルチャーの内情</li>
+                    <li className="feature-list-item">転職を希望する場合のみ、厳選企業を個別マッチング</li>
                   </ul>
                 </div>
               </div>
@@ -632,10 +689,10 @@ export default function LpPage() {
             <div className="faq-row">
               <div className="faq-question">
                 <span className="faq-q-badge">Q</span>
-                <span>本当に費用はかかりませんか？後から請求されることはありますか？</span>
+                <span>なぜ完全無料なのですか？後から請求されることはありますか？</span>
               </div>
               <p className="faq-answer">
-                ご相談者様（エンジニア側）から費用をいただくことは一切ございません。初回90分の面談も含め完全無料です。有料プランの勧誘などもございませんのでご安心ください。
+                ご相談者様（エンジニア側）から費用をいただくことは一切ございません。初回90分の面談も含め完全無料です。キャリア整理の結果、福岡の企業への転職を希望され実際に入社が決まった場合にのみ、採用企業側から紹介手数料をいただく仕組みとなっています。そのため、現職に残る場合でも費用が発生することは絶対にありませんのでご安心ください。
               </p>
             </div>
 
@@ -656,6 +713,16 @@ export default function LpPage() {
               </div>
               <p className="faq-answer">
                 はい、ZoomまたはGoogle Meet等を用いたオンライン面談に完全対応しています。現在関東や関西にお住まいで、福岡へのU・Iターン転職を検討されている方からのご相談も多数いただいております。
+              </p>
+            </div>
+
+            <div className="faq-row">
+              <div className="faq-question">
+                <span className="faq-q-badge">Q</span>
+                <span>現在在職中で多忙なのですが、夜間や休日の相談も可能ですか？</span>
+              </div>
+              <p className="faq-answer">
+                はい、柔軟に対応しております。在職中のエンジニアの方でも参加しやすいよう、平日夜間（19:00〜 / 20:00〜開始など）や週末のご相談枠も設けております。お申し込みフォームよりご希望の時間帯をお気軽にお知らせください。
               </p>
             </div>
           </div>
@@ -779,19 +846,47 @@ export default function LpPage() {
                   {formErrors.experience && <p className="consult-form-error">{formErrors.experience}</p>}
                 </div>
 
-                {/* お問い合わせ・ご相談内容 */}
+                {/* 相談・関心テーマのクイック選択 */}
+                <div className="consult-form-field consult-form-field--full">
+                  <label>
+                    ご相談・関心のあるテーマ <span className="badge-optional">複数選択可</span>
+                  </label>
+                  <p className="form-sub-note">
+                    ※ まだ具体的でなくても大丈夫です。当てはまるものを気軽にお選びください。
+                  </p>
+                  <div className="topic-options-grid">
+                    {consultationTopicOptions.map((topic) => {
+                      const isChecked = selectedTopics.includes(topic);
+                      return (
+                        <label
+                          key={topic}
+                          className={`topic-checkbox-label ${isChecked ? 'is-checked' : ''}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => handleTopicToggle(topic)}
+                          />
+                          <span>{topic}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 自由記述・ご相談内容 */}
                 <div className="consult-form-field consult-form-field--full">
                   <label htmlFor="form-message">
-                    ご相談内容・現状のお悩み <span className="badge-required">必須</span>
+                    自由記述・現状のお悩み <span className="badge-optional">任意</span>
                   </label>
                   <textarea
                     id="form-message"
                     name="message"
-                    rows={4}
+                    rows={3}
                     className={formErrors.message ? 'has-error' : ''}
                     value={formData.message}
                     onChange={handleFormChange}
-                    placeholder="現状のお悩みや、話してみたいことなどを自由にお書きください。（例: 自分の適正年収や市場価値を知りたい、福岡での転職事情を聞きたい、今の会社に残るべきか迷っている 等）"
+                    placeholder="話してみたいことや、現在の状況などがあれば自由にお書きください。（空欄のままでも送信いただけます）"
                   />
                   {formErrors.message && <p className="consult-form-error">{formErrors.message}</p>}
                 </div>
