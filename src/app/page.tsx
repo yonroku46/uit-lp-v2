@@ -18,7 +18,7 @@ interface FormData {
 
 const jobTypes = [
   'バックエンドエンジニア',
-  'Webエンジニア (フロントエンド)',
+  'Webエンジニア',
   'アプリ開発 (モバイル)',
   'フルスタックエンジニア',
   'AI・データエンジニア',
@@ -36,7 +36,7 @@ const consultationTopicOptions = [
   '自分の適正年収・市場価値を知りたい',
   '転職すべきか現職に残るべきか悩んでいる',
   '福岡のIT業界・開発組織の内情を聞きたい',
-  '自社開発やモダン開発企業の求人を見てみたい',
+  '自分の希望にあう求人企業があるか知りたい',
   'U・Iターンの進め方・生活環境を知りたい',
 ];
 
@@ -356,7 +356,7 @@ export default function LpPage() {
               </div>
               <div className="target-callout-item">
                 <span className="target-callout-check">✓</span>
-                <span>求人票を押し付けてこない、技術現場に詳しい専門家に相談したい</span>
+                <span>求人票を押し付けてこない、キャリアコンサルタントに相談したい</span>
               </div>
             </div>
           </div>
@@ -496,12 +496,12 @@ export default function LpPage() {
                     <span className="feature-topic">福岡現地のリアルな市場感と厳選紹介</span>
                   </div>
                   <h3>
-                    <span className="keep">福岡のIT・Web開発現場を知り尽くし、</span>
+                    <span className="keep">福岡のIT・Web開発、</span>
                     <br className="br-pc" />
                     <span className="keep">厳選した優良企業だけをご紹介</span>
                   </h3>
                   <p>
-                    単なるキャリア整理で終わるのではなく、転職を希望される方には、福岡の主要IT企業の社風、開発環境、技術スタック、給与レンジを熟知した上で、あなたの軸に本当にマッチする企業のみを厳選紹介。求人票には載っていない「開発現場のリアル」を包み隠さずお伝えします。
+                    単なるキャリア整理で終わるのではなく、転職を希望される方には、福岡の主要IT企業の社風、開発環境、技術スタック、給与レンジを熟知した上で、あなたの軸に本当にマッチする企業のみを厳選紹介。求人票ではわからない「組織カルチャーや実態」を包み隠さずお伝えします。
                   </p>
                   <ul className="feature-list">
                     <li className="feature-list-item">バックエンド・Web・アプリ・AI特化の市場感</li>
@@ -593,7 +593,7 @@ export default function LpPage() {
                 <li className="step-item">あなたの軸に合致する企業だけを厳選紹介</li>
                 <li className="step-item">求人票には載っていない組織カルチャーや実態の共有</li>
                 <li className="step-item">面接対策・職務経歴書のブラッシュアップ支援</li>
-                <li className="step-item">「転職見送り」の場合も今後のスキルロードマップを策定</li>
+                <li className="step-item">「転職見送り」の場合も今後のキャリアプランの策定をサポート</li>
               </ul>
               <div className="step-result-box">
                 得られる成果：入社後のミスマッチのない、納得度の高いキャリア選択
