@@ -1,76 +1,92 @@
 /**
  * Tracking utility for Japanese LP (UIT-Fukuoka)
- * Handles Meta Pixel and Google Tag Manager events.
+ * Integrates Google Analytics (GA4), Google Ads, Microsoft Clarity, and Meta Pixel.
  */
 
-export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
+import {
+  GA_TRACKING_ID,
+  GOOGLE_ADS_ID,
+  GOOGLE_ADS_CONVERSION_LABEL,
+  CLARITY_ID,
+  pageview as gtagPageView,
+  event as gtagEvent,
+  reportAdsConversion as gtagReportAdsConversion,
+  trackLeadConversion as gtagTrackLeadConversion,
+} from '@/utils/gtag';
+
+export {
+  GA_TRACKING_ID,
+  GOOGLE_ADS_ID,
+  GOOGLE_ADS_CONVERSION_LABEL,
+  CLARITY_ID,
+  gtagTrackLeadConversion as trackLeadConversion,
+};
+
 export const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
-export const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-18201494059';
 
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
     fbq?: (...args: any[]) => void;
     dataLayer?: any[];
+    clarity?: (...args: any[]) => void;
   }
 }
 
 /**
- * Track page views (usually handled automatically by base scripts, 
- * but useful for manual triggers if needed)
+ * Track page views across GA4 and Meta Pixel
  */
 export const pageview = (url: string) => {
-  if (window.gtag) {
-    window.gtag('config', GA_TRACKING_ID, {
-      page_path: url,
-    });
-  }
-  if (window.fbq) {
+  gtagPageView(url);
+  if (typeof window !== 'undefined' && window.fbq) {
     window.fbq('track', 'PageView');
   }
 };
 
 /**
- * Track custom events (e.g., button clicks, form submissions)
+ * Track custom events
  */
-export const event = ({ action, category, label, value }: {
-  action: string;
-  category?: string;
-  label?: string;
-  value?: number;
-}) => {
-  // GTM Event
-  if (window.gtag) {
-    window.gtag('event', action, {
-      event_category: category,
-      event_label: label,
-      value: value,
-    });
-  }
-};
+export const event = gtagEvent;
 
 /**
  * Track Meta Pixel Standard Events
- * @see https://developers.facebook.com/docs/meta-pixel/reference#standard-events
  */
-export const trackMetaEvent = (eventName: string, params?: object) => {
-  if (window.fbq) {
+export const trackMetaEvent = (eventName: string, params?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && window.fbq) {
     window.fbq('track', eventName, params);
   }
 };
 
 /**
- * Specifically track Lead conversion for Meta Pixel
+ * Google Ads Conversion Helper
  */
-export const trackLead = () => {
-  trackMetaEvent('Lead');
+export const reportAdsConversion = gtagReportAdsConversion;
+export const trackGoogleAdsConversion = (label?: string, params?: Record<string, any>) => {
+  gtagReportAdsConversion(label, params);
 };
 
 /**
- * Track Contact event (e.g., clicking CTA button to reach form)
+ * Lead Conversion Tracking
+ * Triggers:
+ * 1. Meta Pixel: 'Lead'
+ * 2. GA4: 'generate_lead'
+ * 3. Google Ads: 'conversion'
  */
-export const trackContact = () => {
-  trackMetaEvent('Contact');
+export const trackLead = (params?: Record<string, any>) => {
+  trackMetaEvent('Lead', params);
+  gtagTrackLeadConversion(params);
+};
+
+/**
+ * Track Contact intent (e.g., clicking CTA button to reach form)
+ */
+export const trackContact = (params?: Record<string, any>) => {
+  trackMetaEvent('Contact', params);
+  gtagEvent('contact_click', {
+    event_category: 'engagement',
+    event_label: 'Consultation CTA',
+    ...params,
+  });
 };
 
 /**
@@ -78,15 +94,5 @@ export const trackContact = () => {
  */
 export const trackViewContent = (contentName: string) => {
   trackMetaEvent('ViewContent', { content_name: contentName });
-};
-
-/**
- * Specifically track Google Ads Conversion Event
- */
-export const trackGoogleAdsConversion = (label: string) => {
-  if (window.gtag) {
-    window.gtag('event', 'conversion', {
-      send_to: `${GOOGLE_ADS_ID}/${label}`,
-    });
-  }
+  gtagEvent('view_content', { content_name: contentName });
 };

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 import Script from 'next/script';
-import { FB_PIXEL_ID, GA_TRACKING_ID, GOOGLE_ADS_ID } from '@/lib/tracking';
+import { FB_PIXEL_ID, GA_TRACKING_ID, GOOGLE_ADS_ID, CLARITY_ID } from '@/lib/tracking';
 import '../styles/globals.scss';
 
 const notoSansJP = Noto_Sans_JP({
@@ -78,12 +78,29 @@ export default function RootLayout({
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  ${GA_TRACKING_ID ? `gtag('config', '${GA_TRACKING_ID}');` : ''}
+                  ${GA_TRACKING_ID ? `gtag('config', '${GA_TRACKING_ID}', { page_path: window.location.pathname });` : ''}
                   ${GOOGLE_ADS_ID ? `gtag('config', '${GOOGLE_ADS_ID}');` : ''}
                 `,
               }}
             />
           </>
+        )}
+
+        {/* Microsoft Clarity */}
+        {CLARITY_ID && (
+          <Script
+            id="microsoft-clarity"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(c,l,a,r,i,t,y){
+                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "${CLARITY_ID}");
+              `,
+            }}
+          />
         )}
 
         {/* Meta Pixel */}

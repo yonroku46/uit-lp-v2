@@ -198,7 +198,11 @@ export default function LpPage() {
             </p>
 
             <div className="hero-actions">
-              <a href="#form" className="hero-cta-btn">
+              <a
+                href="#form"
+                className="hero-cta-btn"
+                onClick={() => tracking.trackContact({ location: 'hero_cta' })}
+              >
                 <span>無料でキャリアの本音を相談する</span>
                 <ArrowRight size={18} strokeWidth={2.4} />
               </a>
