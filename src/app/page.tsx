@@ -3,9 +3,69 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, X } from 'lucide-react';
 import * as tracking from '@/lib/tracking';
 import '@/styles/home.scss';
+
+interface TechCardItem {
+  no: string;
+  title: string;
+  icon: string;
+  iconAlt: string;
+  iconBoxClass: string;
+  tags: string[];
+  concern: string;
+  isWide?: boolean;
+}
+
+const techCards: TechCardItem[] = [
+  {
+    no: '#01 BACKEND',
+    title: 'バックエンド',
+    icon: '/icons/tech/go.svg',
+    iconAlt: 'Go',
+    iconBoxClass: 'card-3d-icon-box--go',
+    tags: ['Go', 'Python', 'Java', 'AWS'],
+    concern: 'モダン環境での設計経験を積みたいが、レガシー保守や運用業務が中心で技術の伸び悩みに焦る……',
+  },
+  {
+    no: '#02 WEB FRONT',
+    title: 'Webエンジニア',
+    icon: '/icons/tech/react.svg',
+    iconAlt: 'React',
+    iconBoxClass: 'card-3d-icon-box--react',
+    tags: ['React', 'Next.js', 'TypeScript'],
+    concern: '急速なトレンド変化を追うのに精一杯で、フロントエンド専門としての「市場価値」や「強み」が整理できない……',
+  },
+  {
+    no: '#03 MOBILE APP',
+    title: 'アプリ開発',
+    icon: '/icons/tech/flutter.svg',
+    iconAlt: 'Flutter',
+    iconBoxClass: 'card-3d-icon-box--flutter',
+    tags: ['Flutter', 'Swift', 'Kotlin'],
+    concern: '社内にアプリ開発者が自分だけで相談相手がいない。技術的な壁打ちや将来のキャリア像を描きにくい……',
+  },
+  {
+    no: '#04 FULL STACK',
+    title: 'フルスタック',
+    icon: '/icons/tech/typescript.svg',
+    iconAlt: 'TypeScript',
+    iconBoxClass: 'card-3d-icon-box--ts',
+    tags: ['Front & Back', 'Cloud設計'],
+    concern: '幅広く対応できる反面、「器用貧乏」になっていないか不安。専門性の軸をどこに置くべきか迷う……',
+  },
+  {
+    no: '#05 AI & INTELLIGENCE',
+    title: 'AI・データ活用',
+    icon: '/icons/tech/python.svg',
+    iconAlt: 'Python',
+    iconBoxClass: 'card-3d-icon-box--python',
+    tags: ['LLM活用', 'Python', '機械学習基盤', 'データ分析'],
+    concern: 'PoC検証にとどまり本番サービス運用の実績が作れない。データ活用を本気で推進できる開発現場に出会いたい……',
+    isWide: true,
+  },
+];
 
 interface FormData {
   name: string;
@@ -55,6 +115,19 @@ export default function LpPage() {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [formErrors, setFormErrors] = useState<Partial<FormData>>({});
+
+  // Hero Card Dialog State
+  const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedCardIndex(null);
+    };
+    if (selectedCardIndex !== null) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedCardIndex]);
 
   const handleTopicToggle = (topic: string) => {
     setSelectedTopics((prev) =>
@@ -160,7 +233,7 @@ export default function LpPage() {
           <a href="#" className="header-brand">
             <span className="header-logo">
               <span className="logo-full">UIT-Fukuoka</span>
-              <span className="logo-short">UIT</span>
+              <span className="logo-short">UIT-Fukuoka</span>
             </span>
             <span className="header-subtitle">福岡のITエンジニア専門キャリア相談</span>
           </a>
@@ -218,122 +291,121 @@ export default function LpPage() {
 
           {/* Right: 3D Physical Cards Showcase */}
           <div className="hero-3d-stage">
-
-
             <div className="cards-3d-grid">
-              {/* Card 01: Backend */}
-              <div className="card-3d">
-                <div className="card-3d-head">
-                  <span className="card-3d-no">#01 BACKEND</span>
-                  <div className="card-3d-icon-box card-3d-icon-box--go">
-                    <Image
-                      src="/icons/tech/go.svg"
-                      alt="Go"
-                      width={22}
-                      height={22}
-                      unoptimized
-                    />
+              {techCards.map((card, idx) => (
+                <div
+                  key={card.no}
+                  className={`card-3d ${card.isWide ? 'card-3d--wide' : ''}`}
+                  onClick={() => setSelectedCardIndex(idx)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSelectedCardIndex(idx);
+                    }
+                  }}
+                  aria-label={`${card.title}のよくある悩みを見る`}
+                >
+                  <div className="card-3d-head">
+                    <span className="card-3d-no">{card.no}</span>
+                    <div className={`card-3d-icon-box ${card.iconBoxClass}`}>
+                      <Image
+                        src={card.icon}
+                        alt={card.iconAlt}
+                        width={card.iconBoxClass.includes('flutter') ? 20 : card.iconBoxClass.includes('ts') ? 21 : 22}
+                        height={card.iconBoxClass.includes('flutter') ? 20 : card.iconBoxClass.includes('ts') ? 21 : 22}
+                        unoptimized
+                      />
+                    </div>
+                  </div>
+                  <div className="card-3d-title">{card.title}</div>
+                  <div className="card-3d-tags">
+                    {card.tags.map((tag) => (
+                      <span key={tag} className="card-3d-tag">{tag}</span>
+                    ))}
                   </div>
                 </div>
-                <div className="card-3d-title">バックエンド</div>
-                <div className="card-3d-tags">
-                  <span className="card-3d-tag">Go</span>
-                  <span className="card-3d-tag">Python</span>
-                  <span className="card-3d-tag">Java</span>
-                  <span className="card-3d-tag">AWS</span>
-                </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              {/* Card 02: Frontend & Web */}
-              <div className="card-3d">
-                <div className="card-3d-head">
-                  <span className="card-3d-no">#02 WEB FRONT</span>
-                  <div className="card-3d-icon-box card-3d-icon-box--react">
-                    <Image
-                      src="/icons/tech/react.svg"
-                      alt="React"
-                      width={22}
-                      height={22}
-                      unoptimized
-                    />
-                  </div>
-                </div>
-                <div className="card-3d-title">Webエンジニア</div>
-                <div className="card-3d-tags">
-                  <span className="card-3d-tag">React</span>
-                  <span className="card-3d-tag">Next.js</span>
-                  <span className="card-3d-tag">TypeScript</span>
-                </div>
-              </div>
+          {/* Tech Concern Dialog Modal */}
+          {selectedCardIndex !== null && (
+            <div
+              className="tech-dialog-backdrop"
+              onClick={() => setSelectedCardIndex(null)}
+            >
+              <div
+                className="tech-dialog-modal"
+                onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="tech-dialog-title"
+              >
+                <button
+                  type="button"
+                  className="tech-dialog-close"
+                  onClick={() => setSelectedCardIndex(null)}
+                  aria-label="閉じる"
+                >
+                  <X size={20} />
+                </button>
 
-              {/* Card 03: Mobile App */}
-              <div className="card-3d">
-                <div className="card-3d-head">
-                  <span className="card-3d-no">#03 MOBILE APP</span>
-                  <div className="card-3d-icon-box card-3d-icon-box--flutter">
+                <div className="tech-dialog-header">
+                  <div className={`tech-dialog-icon-box ${techCards[selectedCardIndex].iconBoxClass}`}>
                     <Image
-                      src="/icons/tech/flutter.svg"
-                      alt="Flutter"
-                      width={20}
-                      height={20}
+                      src={techCards[selectedCardIndex].icon}
+                      alt={techCards[selectedCardIndex].iconAlt}
+                      width={26}
+                      height={26}
                       unoptimized
                     />
                   </div>
+                  <div className="tech-dialog-title-group">
+                    <span className="tech-dialog-no">{techCards[selectedCardIndex].no}</span>
+                    <h3 id="tech-dialog-title" className="tech-dialog-title">
+                      {techCards[selectedCardIndex].title}
+                    </h3>
+                  </div>
                 </div>
-                <div className="card-3d-title">アプリ開発</div>
-                <div className="card-3d-tags">
-                  <span className="card-3d-tag">Flutter</span>
-                  <span className="card-3d-tag">Swift</span>
-                  <span className="card-3d-tag">Kotlin</span>
-                </div>
-              </div>
 
-              {/* Card 04: Full Stack */}
-              <div className="card-3d">
-                <div className="card-3d-head">
-                  <span className="card-3d-no">#04 FULL STACK</span>
-                  <div className="card-3d-icon-box card-3d-icon-box--ts">
-                    <Image
-                      src="/icons/tech/typescript.svg"
-                      alt="TypeScript"
-                      width={21}
-                      height={21}
-                      unoptimized
-                    />
-                  </div>
+                <div className="tech-dialog-tags">
+                  {techCards[selectedCardIndex].tags.map((tag) => (
+                    <span key={tag} className="tech-dialog-tag">{tag}</span>
+                  ))}
                 </div>
-                <div className="card-3d-title">フルスタック</div>
-                <div className="card-3d-tags">
-                  <span className="card-3d-tag">Front & Back</span>
-                  <span className="card-3d-tag">Cloud設計</span>
-                </div>
-              </div>
 
-              {/* Card 05: AI & Data (Wide Card) */}
-              <div className="card-3d card-3d--wide">
-                <div className="card-3d-head">
-                  <span className="card-3d-no">#05 AI & INTELLIGENCE</span>
-                  <div className="card-3d-icon-box card-3d-icon-box--python">
-                    <Image
-                      src="/icons/tech/python.svg"
-                      alt="Python"
-                      width={22}
-                      height={22}
-                      unoptimized
-                    />
+                <div className="tech-dialog-concern-box">
+                  <div className="tech-dialog-concern-header">
+                    <span className="tech-dialog-concern-pill">よくある本音</span>
+                    <span className="tech-dialog-concern-sub">エンジニアが抱えるリアルな違和感</span>
+                  </div>
+                  <div className="tech-dialog-concern-content">
+                    <span className="tech-dialog-quote-mark tech-dialog-quote-mark--start" aria-hidden="true">“</span>
+                    <p className="tech-dialog-concern-text">
+                      {techCards[selectedCardIndex].concern}
+                    </p>
+                    <span className="tech-dialog-quote-mark tech-dialog-quote-mark--end" aria-hidden="true">”</span>
                   </div>
                 </div>
-                <div className="card-3d-title">AI・データ活用</div>
-                <div className="card-3d-tags">
-                  <span className="card-3d-tag">LLM活用</span>
-                  <span className="card-3d-tag">Python</span>
-                  <span className="card-3d-tag">機械学習基盤</span>
-                  <span className="card-3d-tag">データ分析</span>
+
+                <div className="tech-dialog-actions">
+                  <button
+                    type="button"
+                    className="tech-dialog-cta"
+                    onClick={() => {
+                      setSelectedCardIndex(null);
+                      document.getElementById('empathy')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    <span>リアルな悩み・実態を見る</span>
+                    <ArrowRight size={16} />
+                  </button>
                 </div>
               </div>
             </div>
-
-          </div>
+          )}
         </div>
       </section>
 

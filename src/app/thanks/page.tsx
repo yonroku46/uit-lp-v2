@@ -23,7 +23,7 @@ export default function ThanksPage() {
           <Link href="/" className="header-brand">
             <span className="header-logo">
               <span className="logo-full">UIT-Fukuoka</span>
-              <span className="logo-short">UIT</span>
+              <span className="logo-short">UIT-Fukuoka</span>
             </span>
             <span className="header-subtitle">福岡のITエンジニア専門キャリア相談</span>
           </Link>
