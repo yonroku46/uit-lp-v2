@@ -258,12 +258,11 @@ export default function LpPage() {
             </div>
 
             <h1 className="hero-title">
-              <span className="keep">求人票を眺める前に、</span>
+              <span className="keep">働きたい会社より</span>
               <br />
-              <span className="keep text-accent">どう生きたいか</span>
-              <span className="keep">から始める</span>
+              <span className="keep text-accent">生きたい働き方</span><span>を</span>
+              <span className="keep">見つける。</span>
               <br className="br-sp" />
-              <span className="keep">IT転職相談</span>
             </h1>
 
             <p className="hero-lead">

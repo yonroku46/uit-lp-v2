@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 // =============================================================================
 // SCSS Variables & Design Tokens
@@ -20,8 +20,8 @@ $c-border: #E2E8F0;
 $c-action: #1D4ED8;
 $c-action-hover: #1E40AF;
 
-$font-num: "Plus Jakarta Sans", system-ui, sans-serif;
-$font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-num: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-jp: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Segoe UI", Meiryo, sans-serif;
 
 :root {
   --c-brand: #{$c-brand};
@@ -54,8 +54,10 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
   font-family: $font-jp;
   font-size: 15px;
   line-height: 1.8;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.025em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
   word-break: normal;
   overflow-wrap: break-word;
@@ -73,9 +75,10 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
   h1, h2, h3, h4 {
     color: $c-text-main;
     font-family: $font-jp;
-    font-weight: 900;
-    line-height: 1.45;
+    font-weight: 800;
+    line-height: 1.42;
     letter-spacing: -0.015em;
+    font-feature-settings: "palt" 1;
   }
 }
 
@@ -419,7 +422,7 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
   }
 
   &-title {
-    font-size: clamp(23px, 7.2vw, 42px);
+    font-size: clamp(23px, 8.2vw, 42px);
     font-weight: 900;
     line-height: 1.35;
     letter-spacing: -0.02em;

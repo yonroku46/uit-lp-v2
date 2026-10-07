@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 // =============================================================================
 // Tokens & Design System
@@ -19,8 +19,8 @@ $c-border: #E2E8F0;
 $c-action: #1D4ED8;
 $c-action-hover: #1E40AF;
 
-$font-num: "Plus Jakarta Sans", system-ui, sans-serif;
-$font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-num: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-jp: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Segoe UI", Meiryo, sans-serif;
 
 // =============================================================================
 // Thanks Page Main Section
@@ -36,6 +36,8 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
   position: relative;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 
   * {
     box-sizing: border-box;
@@ -110,10 +112,11 @@ $font-jp: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", 
   // Title
   &__title {
     font-size: clamp(22px, 4.5vw, 28px);
-    font-weight: 900;
+    font-weight: 800;
     color: $c-text-main;
     line-height: 1.35;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
+    font-feature-settings: "palt" 1;
     margin-bottom: 14px;
   }
 
