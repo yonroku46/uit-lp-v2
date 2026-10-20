@@ -119,6 +119,28 @@ export default function LpPage() {
   // Hero Card Dialog State
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
 
+  // Sticky Bottom CTA State
+  const [showStickyCta, setShowStickyCta] = useState(false);
+  const [isCtaDismissed, setIsCtaDismissed] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY;
+      const formEl = document.getElementById('form');
+      if (formEl) {
+        const rect = formEl.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.75) {
+          setShowStickyCta(false);
+          return;
+        }
+      }
+      setShowStickyCta(scrollPos > 450);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedCardIndex(null);
@@ -235,7 +257,7 @@ export default function LpPage() {
               <span className="logo-full">UIT-Fukuoka</span>
               <span className="logo-short">UIT-Fukuoka</span>
             </span>
-            <span className="header-subtitle">福岡のITエンジニア専門キャリア相談</span>
+            <span className="header-subtitle">福岡へのU・Iターン ＆ 福岡のITエンジニア専門キャリア相談（全国オンライン対応）</span>
           </a>
 
           <nav className="header-nav">
@@ -254,19 +276,19 @@ export default function LpPage() {
         <div className="wrap hero-grid">
           <div>
             <div className="hero-category-tag">
-              <span>福岡特化 × ITエンジニア専門</span>
+              <span>【全国オンライン対応】福岡へのU・Iターン ＆ ITエンジニア専門キャリア相談</span>
             </div>
 
             <h1 className="hero-title">
-              <span className="keep">働きたい会社より</span>
+              <span className="keep">働きたい会社より、</span>
               <br />
-              <span className="keep text-accent">生きたい働き方</span><span>を</span>
+              <span className="keep text-accent">福岡で生きたい働き方</span><span>を</span>
               <span className="keep">見つける。</span>
               <br className="br-sp" />
             </h1>
 
             <p className="hero-lead">
-              転職を前提としなくても大丈夫。あなたの技術の強みと本音を徹底的に整理し、「自分はこれでいいんだ」と納得して次の道を選べる軸をつくります。福岡のリアルな開発現場を知る国家資格コンサルタントが1対1で個別伴走。
+              「福岡で暮らしたいけれど、年収や技術環境がどうなるか不安」「東京と比べて現地のリアルな開発現場はどうなのか」「そもそも今すぐ転職すべきか？」——。福岡のIT市場を知り尽くした国家資格コンサルタントが1対1で個別伴走。無理な求人押し付けは一切なく、初回90分無料・オンラインであなたのキャリアの軸を整理します。
             </p>
 
             <div className="hero-actions">
@@ -275,16 +297,16 @@ export default function LpPage() {
                 className="hero-cta-btn"
                 onClick={() => tracking.trackContact({ location: 'hero_cta' })}
               >
-                <span>無料でキャリアの本音を相談する</span>
+                <span>まずは無料でU・Iターン＆キャリア相談する（90分無料）</span>
                 <ArrowRight size={18} strokeWidth={2.4} />
               </a>
             </div>
 
             <div className="hero-trust-list">
-              <span className="trust-pill">初回90分 無料</span>
-              <span className="trust-pill">転職前提なし・現職残留OK</span>
-              <span className="trust-pill">無理な求人押し付けゼロ</span>
-              <span className="trust-pill">オンライン対応・履歴書不要</span>
+              <span className="trust-pill">初回90分完全無料</span>
+              <span className="trust-pill">全国オンライン対応</span>
+              <span className="trust-pill">強引な転職勧誘・電話営業ゼロ</span>
+              <span className="trust-pill">現地のリアルな開発組織の内情を共有</span>
             </div>
           </div>
 
@@ -856,6 +878,9 @@ export default function LpPage() {
                     placeholder="例: 090-1234-5678"
                     autoComplete="tel"
                   />
+                  <p className="form-input-help">
+                    ※ 強引な電話営業は一切行いません。日程調整のご連絡やご希望の連絡手段（メール等）を最優先いたします。
+                  </p>
                   {formErrors.phone && <p className="consult-form-error">{formErrors.phone}</p>}
                 </div>
 
@@ -1048,6 +1073,38 @@ export default function LpPage() {
           </div>
         </div>
       </footer>
+
+      {/* STICKY BOTTOM FLOATING CTA */}
+      {showStickyCta && !isCtaDismissed && (
+        <aside className="sticky-cta-bar" aria-label="無料キャリア相談のお申し込み">
+          <div className="wrap sticky-cta-inner">
+            <div className="sticky-cta-text">
+              <span className="sticky-cta-badge">初回90分無料</span>
+              <span className="sticky-cta-lead">
+                福岡へのU・Iターン＆ITキャリア相談。求人押し付けゼロ・オンライン対応
+              </span>
+            </div>
+            <div className="sticky-cta-action">
+              <a
+                href="#form"
+                className="sticky-cta-btn"
+                onClick={() => tracking.trackContact({ location: 'sticky_floating_cta' })}
+              >
+                <span>無料相談に申し込む</span>
+                <ArrowRight size={16} />
+              </a>
+              <button
+                type="button"
+                className="sticky-cta-close"
+                onClick={() => setIsCtaDismissed(true)}
+                aria-label="バナーを閉じる"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        </aside>
+      )}
     </div>
   );
 }

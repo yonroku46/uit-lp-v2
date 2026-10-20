@@ -1869,3 +1869,126 @@ $font-jp: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "H
     transform: none;
   }
 }
+
+// Form input help text
+.form-input-help {
+  font-size: 11.5px;
+  color: #64748B;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+// =============================================================================
+// Sticky Floating Bottom CTA Bar
+// =============================================================================
+.sticky-cta-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+  padding: 10px 0;
+  animation: slideUpCta 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  .sticky-cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .sticky-cta-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .sticky-cta-badge {
+    background: #10B981;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .sticky-cta-lead {
+    font-size: 13px;
+    font-weight: 600;
+    color: #F8FAFC;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
+
+    @media (min-width: 680px) {
+      display: inline;
+    }
+  }
+
+  .sticky-cta-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .sticky-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1D4ED8;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 8px 16px;
+    border-radius: 8px;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.4);
+    transition: background 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+      background: #1E40AF;
+      transform: translateY(-1px);
+    }
+  }
+
+  .sticky-cta-close {
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: #FFFFFF;
+    }
+  }
+}
+
+@keyframes slideUpCta {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+

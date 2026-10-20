@@ -14,22 +14,30 @@ const notoSansJP = Noto_Sans_JP({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: {
-    default: 'UIT-Fukuoka | 福岡のITエンジニア専門キャリア相談（転職・UIターン支援）',
+    default: 'UIT-Fukuoka | 福岡へのU・Iターン ＆ ITエンジニア専門キャリア相談・転職支援（初回90分無料）',
     template: '%s | UIT-Fukuoka',
   },
   description:
-    'いきなり求人は紹介しません。福岡在住＆U・Iターン希望のITエンジニア（バックエンド/Web/アプリ/フルスタック/AI等）専門の個別キャリア相談。強みと理想の働き方を徹底整理し、ミスマッチを防ぐ初回90分無料相談。',
+    '【全国オンライン対応】東京・大阪等から福岡へのU・Iターン移住や、福岡現地での転職を考えるITエンジニア専門の個別キャリア相談。無理な求人紹介は一切なし。現地の開発環境・年収レンジ・生活事情を熟知した国家資格コンサルタントが初回90分無料伴走。',
   keywords: [
-    '福岡', 'エンジニア', '転職', 'UIターン', 'キャリア相談', 'IT転職', 'バックエンド', 'Webエンジニア', 'アプリ開発', 'AIエンジニア', '無料相談'
+    '福岡 UIターン',
+    '福岡 エンジニア 転職',
+    '福岡 IT 転職',
+    '福岡 IT 転職相談',
+    'エンジニア 転職 福岡',
+    'エンジニア キャリア相談',
+    'キャリアカウンセリング 福岡',
+    'ITエンジニア 移住',
+    '国家資格キャリアコンサルタント',
   ],
   openGraph: {
     type: 'website',
     locale: 'ja_JP',
     url: process.env.NEXT_PUBLIC_SITE_URL,
     siteName: 'UIT-Fukuoka',
-    title: 'UIT-Fukuoka | 福岡のITエンジニア専門キャリア相談（転職・UIターン支援）',
+    title: 'UIT-Fukuoka | ITエンジニア専門の転職・キャリア相談・キャリアカウンセリング（初回無料）',
     description:
-      'いきなり求人は紹介しません。福岡在住＆U・Iターン希望のITエンジニア専門キャリア相談。ミスマッチを防ぐ初回90分無料相談。',
+      '求人の押し付けゼロ。ITエンジニア専門のキャリアカウンセリング・転職相談。転職すべきかの迷いから強みの言語化まで、国家資格コンサルタントが初回90分無料個別伴走。',
     images: [
       {
         url: '/og-image.png',
@@ -41,9 +49,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'UIT-Fukuoka | 福岡のITエンジニア専門キャリア相談（転職・UIターン支援）',
+    title: 'UIT-Fukuoka | ITエンジニア専門の転職・キャリア相談・キャリアカウンセリング（初回無料）',
     description:
-      'いきなり求人は紹介しません。福岡在住＆U・Iターン希望のITエンジニア専門キャリア相談。ミスマッチを防ぐ初回90分無料相談。',
+      '求人の押し付けゼロ。ITエンジニア専門のキャリアカウンセリング・転職相談。初回90分無料・オンライン対応。',
     images: ['/og-image.png'],
   },
   robots: {
